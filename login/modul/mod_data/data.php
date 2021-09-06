@@ -2,16 +2,8 @@
 include "../config/fungsi_paging.php";
 include "../config/fungsi_notifbar.php";
 
-  if ($_SESSION['level']=='admin' OR $_SESSION['level']=='user'){  
-    $aksi="modul/mod_data/aksi_data.php";
-    
-    $act = '';
-    if (!empty($_GET['act'])){
-    	$act = $_GET['act'];
-    } 
-
-    switch($act){
-
+$aksi="modul/mod_data/aksi_data.php";
+switch($control_act){
     default:
     echo "<section class=\"col-lg-12 connectedSortable\">";
     show_notif_swal();
@@ -61,11 +53,9 @@ include "../config/fungsi_notifbar.php";
 		    $batas  = 10;
 		    $posisi = $p->cariPosisi($batas);
 
-		    $tampil= query("SELECT * FROM peg_data ORDER BY id DESC LIMIT $posisi,$batas");
-		    
-
+		    $tampil = viewallquery("SELECT * FROM peg_data ORDER BY id DESC LIMIT $posisi,$batas");
 		    $no = $posisi+1;
-		    while ($r=mysqli_fetch_array($tampil)){
+		    foreach($tampil as $r) :
 		echo"<td class='left' width='25'>$no</td>
 						<td class='left'>$r[NO_KK]</td>
 						<td class='left'>$r[NIK]</td>
@@ -95,11 +85,11 @@ include "../config/fungsi_notifbar.php";
 						</td>
 				        </tr>";
 		      $no++;
-		    }
+			endforeach;
 		    echo "</tbody></table></div> 
 			      ";
 
-		    $jmldata = mysqli_num_rows(query("SELECT * FROM peg_data"));
+		    $jmldata = numrowquery("SELECT * FROM peg_data");
 		    $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
 		    $linkHalaman = $p->navHalaman($_GET['halaman'], $jmlhalaman);
 
@@ -133,12 +123,12 @@ include "../config/fungsi_notifbar.php";
 		    $p      = new Paging9;
 		    $batas  = 10;
 		    $posisi = $p->cariPosisi($batas);
-		    $tampil=query("SELECT * FROM peg_data where NAMA LIKE '%$_GET[kata]%' or NIK = '$_GET[kata]'
+		    $tampil = viewallquery("SELECT * FROM peg_data where NAMA LIKE '%$_GET[kata]%' or NIK = '$_GET[kata]'
 			                       ORDER BY id DESC LIMIT $posisi,$batas");
 
 
 		    $no = $posisi+1;
-		    while ($r=mysqli_fetch_array($tampil)){
+		    foreach($tampil as $r) :
 		      echo "<tr><td class='left' width='25'>$no</td>
 						<td class='left'>$r[NO_KK]</td>
 						<td class='left'>$r[NIK]</td>
@@ -168,12 +158,12 @@ include "../config/fungsi_notifbar.php";
 						</td>
 				    </tr>";
 		      $no++;
-		    }
+			endforeach;
 		    echo "</tbody></table></div>";
 
-		    $jmldata = mysqli_num_rows(query("SELECT * FROM peg_data where NAMA LIKE '%$_GET[kata]%' or NIK = '$_GET[kata]'"));
+		    $jmldata = numrowquery("SELECT * FROM peg_data where NAMA LIKE '%$_GET[kata]%' or NIK = '$_GET[kata]'");
 		    $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
-		    $linkHalaman = $p->navHalaman($_GET[halaman], $jmlhalaman);
+		    $linkHalaman = $p->navHalaman($_GET['halaman'], $jmlhalaman);
 
 		echo "<div class=\"card-footer\" width='150'>
 		      $linkHalaman
@@ -182,8 +172,6 @@ include "../config/fungsi_notifbar.php";
 			      </section>";
 		    } 
     break;
-	
-	
 	
   case "tambah":
     echo "<section class=\"col-lg-12 connectedSortable\">
@@ -196,23 +184,50 @@ include "../config/fungsi_notifbar.php";
 				</div>
                <table class=\"table\">
 			   <tbody>
-               <tr><td class='left' width='120'>Cari</td>  <td>  <input id='CARI_NIK' type=text name='CARI_NIK' class='form-control' required></td></tr>
+			   <form method=POST action='$aksi?module=data&act=input' enctype=\"multipart/form-data\">
+               				  <tr><td class='left' width='120'>NIK</td>  <td>  <input id='NIK' type=text name='NIK' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>No KK</td>  <td>  <input type=text name='NO_KK' class='form-control' ></td></tr>
+        					  <tr><td class='left' width='120'>Nama</td>  <td>  <input type=text name='NAMA' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>Tempat lahir</td>  <td>  <input type=text name='TEMPAT_LAHIR' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>Tanggal lahir</td>  <td>  <input type=date name='TANGGAL_LAHIR' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>Status perkawinan</td>  <td>  
+        					  <select class='form-control' name='STATUS_PERKAWINAN'>
+                                    <option value='B'>Belum Kawin</option>
+                                    <option value='S'>Kawin</option>
+                                     <option value='P'>Pernah Kawin</option> 
+                              </select>
+        					  </td></tr>
+        					  <tr><td class='left' width='120'>Jenis kelamin</td>  <td>  
+        					  <select class='form-control' name='JENIS_KELAMIN'>
+                                    <option value='L'>Laki-laki</option>
+                                    <option value='P'>Perempuan</option> 
+                              </select>
+        					  </td></tr>
+        					  <tr><td class='left' width='120'>Alamat</td>  <td>  <input type=text name='ALAMAT' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>RT</td>  <td>  <input type=text name='RT' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>RW</td>  <td>  <input type=text name='RW' class='form-control'></td></tr>
+        					  <tr><td class='left' width='120'>Disabilitas</td>  <td>  
+        					  <select class='form-control' name='DISABILITAS'>
+                                    <option value='1'>Tuna Daksa</option>
+                                    <option value='2'>Tuna Netra</option> 
+                                    <option value='3'>Tuna Rungu/Wicara</option> 
+                                    <option value='4'>Tuna Grahita</option> 
+                                    <option value='5'>Tuna Disabilitas Lainnya</option> 
+                              </select>
+                              </td></tr>
+        					  <tr><td class='left' width='120'>File</td>  <td><input type=\"file\" class=\"form-control\" name=\"file\"></tr>
+							  <tr><td class='left'></td><td class='left' colspan=2><input class=\"btn btn-primary\" type=submit value=Simpan>
+    					  <input class=\"btn btn-default\" type=button value=Batal onclick=self.history.back()></td></tr>
+			   </form>
                 </tbody>
 			   </table>
-			   <form method=POST action=$aksi?module=data&act=input>
-               <div id='LOAD_DPT'>
-				      
-			   </div>
-			   </form>
+			   
 		</div>
         </section>";
     break;
   
-
   case "edit":
-    $edit = query("SELECT * FROM peg_data WHERE id='$_GET[id]'");
-    $r    = mysqli_fetch_array($edit);
-
+    $r = viewquery("SELECT * FROM peg_data WHERE id='$_GET[id]'");
     echo "<section class=\"col-lg-12 connectedSortable\">
           <div class=\"card card-primary card-outline\">
 				<div class=\"card-header\">
@@ -459,37 +474,7 @@ include "../config/fungsi_notifbar.php";
              </section>";
         break;
     }
-  } else {
-        include "view/blank.php";
-  }
-
 ?>
-<script>
-    $(document).ready(function(){
-        $('#id_kecamatan').on('change',function(){
-           var str = $('#id_kecamatan').val();
-           var res = str.replace(/\ /g, "+");    
-           $('#load_kelurahan').load('modul/mod_data/aksi_data.php?module=data&act=kecamatan&id=' + res);
-        });
-        $('#CARI_NIK').on('change',function(){
-           $('#LOAD_DPT').html("<table class='table'><tbody><tr><td class='left' width='120'></td><td>Tunggu Sebentar!</tr></tbody></table>");
-           var str = $('#CARI_NIK').val();
-           var res = str.replace(/\ /g, "+");    
-           $('#LOAD_DPT').load('modul/mod_data/aksi_data.php?module=data&act=nik&nik=' + res);
-        });
-        $('span').click(function(){
-           var link = $(this).attr("href");
-           $('#LOAD_DPT').load(link);
-        });
-        //$('#load_kelurahan').on('change',function(){
-           //var str = $('#id_kelurahan').val();
-           //var res = str.replace(/\ /g, "+");    
-           //$('#load_tps').load('modul/mod_data/aksi_data.php?module=data&act=kelurahan&id=' + res);
-           //$('#load_relawan').load('modul/mod_data/aksi_data.php?module=data&act=relawan&id=' + res);
-        //});
-         
-    });
-</script>
 <script>
 	function confirmation(ev) {
 	ev.preventDefault();
@@ -504,13 +489,9 @@ include "../config/fungsi_notifbar.php";
 			})
 				.then((willDelete) => {
 				    if (willDelete) {
-						swal("Data berhasil dihapus!", {
-						  icon: "success",
-						});
 						setTimeout(function() 
 								   { window.open(urlToRedirect,"_self"); 
-								   }, 500);
-						
+								   }, 0);
 					    } else {
 						swal("Perintah penghapusan dibatalkan!");
 					}

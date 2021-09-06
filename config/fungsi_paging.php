@@ -98,6 +98,7 @@ if($halaman_aktif > 1){
                     <a class=\"btn btn-default\" href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$prev&kata=$_GET[kata]>&lsaquo; Prev</a>";
 }
 else{ 
+	$prev = $halaman_aktif;
 	$link_halaman .= "<a class=\"btn btn-default\" href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=1&kata=$_GET[kata]>&laquo; First</a>
                     <a class=\"btn btn-default\" href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$prev&kata=$_GET[kata]>&lsaquo; Prev</a>";
 }

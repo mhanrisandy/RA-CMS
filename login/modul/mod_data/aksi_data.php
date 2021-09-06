@@ -1,14 +1,14 @@
 <?php
 session_start();
 include "../../../config/koneksi.php";
-if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+if (empty($_SESSION['username'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Sesi login anda berhakhir<br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
 else{
 include "../../../config/fungsi_notifbar.php";
-//include "../../../config/fungsi_seo.php";
+include "../../../config/fungsi_file.php";
 //include "../../../config/library.php";
 
 $act=$_GET['act'];
@@ -17,6 +17,12 @@ $module=$_GET['module'];
 // Hapus data
 if ($act=='hapus'){
   query("DELETE FROM peg_data WHERE id='$_GET[id]'");
+  
+  session_start();
+        $_SESSION[pesan] = 'Data berhasil dihapus';
+        $_SESSION[c] = 'success';
+        $_SESSION[i] = 'check';
+
   header('location:../../index.php?module='.$module);
 }
 
@@ -30,10 +36,6 @@ elseif ($act=='input'){
         $_SESSION[i] = 'check';
    } else {
    query("INSERT INTO peg_data(
-                               username,
-                               id_relawan,
-                               id_kelurahan,
-                               TPS,
                                NO_KK,
                                NIK,
                                NAMA,
@@ -44,14 +46,9 @@ elseif ($act=='input'){
                                ALAMAT,
                                RT,
                                RW,
-                               DISABILITAS,
-                               KETERANGAN
+                               DISABILITAS
                                    ) 
 					                VALUES(
-					             '$_SESSION[namauser]',  
-					             '$_POST[id_relawan]',
-					             '$_POST[id_kelurahan]',
-					             '$_POST[TPS]',
                                  '$_POST[NO_KK]',
                                  '$_POST[NIK]',
                                  '$_POST[NAMA]',
@@ -62,9 +59,10 @@ elseif ($act=='input'){
                                  '$_POST[ALAMAT]',
                                  '$_POST[RT]',
                                  '$_POST[RW]',
-                                 '$_POST[DISABILITAS]',
-                                 '$_POST[KETERANGAN]'
+                                 '$_POST[DISABILITAS]'
                                  )");
+
+    filesimpan($_FILES['file'],"file_users",$_SESSION[username].'-');
                                 
    }
   header('location:../../?module='.$module); 

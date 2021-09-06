@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../config/koneksi.php";
 
   $username = enkrip($_POST['username']);
@@ -6,7 +7,6 @@ include "../config/koneksi.php";
 
   // pastikan username dan password adalah berupa huruf atau angka.
   if (!ctype_alnum($username) OR !ctype_alnum($pass)){
-    session_start();
     $_SESSION['pesan'] = 'username anda tidak ditemukan!';
     include "login.php";
   } else{
@@ -16,9 +16,6 @@ include "../config/koneksi.php";
 
     // jika user ditemukan
     if ($ketemu > 0){
-      session_start();
-
-      $_SESSION[namauser]     = $r[username];
       $_SESSION[username]     = $r[username];
       $_SESSION[namalengkap]  = $r[nama_lengkap];
       $_SESSION[level]        = $r[level];

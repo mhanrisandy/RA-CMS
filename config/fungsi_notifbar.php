@@ -23,7 +23,7 @@ function show_notif_swal(){
   if (!empty($_SESSION['pesan'])) {
     echo "<script>
               swal('"; echo $_SESSION['pesan']; echo"', {
-                icon: 'success',
+                icon: '"; echo $_SESSION['c']; echo"',
               });
           </script>";
     unset($_SESSION['pesan']);

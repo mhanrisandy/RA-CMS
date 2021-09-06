@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../config/koneksi.php";
+include "../config/setting.php";
 //error_reporting(0);
 
 if (empty($_SESSION['username'])){
@@ -52,67 +53,15 @@ else{
 	  
 		  <!-- Navbar -->
 		  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-				<?php include "view/menu_nav_kiri.php"; ?> 
-				<?php include "view/menu_nav_kanan.php"; ?> 
+				<?php include "view/nav_kiri.php"; ?> 
+				<?php include "view/nav_kanan.php"; ?> 
 		  </nav>
 		  <!-- /.navbar -->
    
 			<?php  include "view/menu.php"; ?>
 			
 			<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<div class="content-header">
-			  <div class="container-fluid">
-				<div class="row mb-2">
-				  <div class="col-sm-6">
-					<h1 class="m-0 text-dark">
-					<?php if ($_GET['module']=='home'){
-							echo "Dashboard"; 
-						 } elseif ($_GET['module']=='ref_kecamatan'){
-							echo "Kecamatan"; 
-						 } elseif ($_GET['module']=='ref_kelurahan'){
-							echo "Kelurahan / Desa"; 
-						 } elseif ($_GET['module']=='ref_tps'){
-							echo "TPS"; 
-						 } elseif ($_GET['module']=='ref_data'){
-							echo "Data"; 
-						 } else {
-						    $label = ucfirst($_GET['module']);
-						    $label = str_replace("_"," ",$label);
-							echo $label;
-						 }					
-					?>
-					</h1>
-				  </div><!-- /.col -->
-				  <div class="col-sm-6">
-					<ol class="breadcrumb float-sm-right">
-					  <li class="breadcrumb-item"><a href="media.php?module=home">Home</a></li>
-					  <li class="breadcrumb-item active">
-					      <?php
-					        if ($_GET['module']=='home'){
-							    echo "Home"; 
-    						 } elseif ($_GET['module']=='ref_kecamatan'){
-    							echo "<a onclick=self.history.back()>kecamatan</a>"; 
-    						 } elseif ($_GET['module']=='ref_kelurahan'){
-    							echo "<a onclick=self.history.back()>kelurahan</a>"; 
-    						 } elseif ($_GET['module']=='ref_tps'){
-    						echo "<a onclick=self.history.back()>tps</a>"; 
-    						 } elseif ($_GET['module']=='ref_data'){
-    							echo "<a onclick=self.history.back()>data</a>"; 
-    						 } else { 
-    						     $label = $_GET['module']; 
-    						    //$label = ucfirst($_GET['module']);
-    						    //$label = str_replace("_"," ",$label);
-    							echo "<a href=media.php?module=$label>$label</a>"; 
-    						 }
-					      ?>
-					  </li>
-					</ol>
-				  </div><!-- /.col -->
-				</div><!-- /.row -->
-			  </div><!-- /.container-fluid -->
-			</div>
-			<!-- /.content-header -->
+			<?php include "view/content_header.php"; ?>
 				<section class="content">
 					<div class="container-fluid">
 						<div class="row">
@@ -123,7 +72,7 @@ else{
 			</div>
 			
 			<!-- Control Sidebar -->
-                 <?php include "view/menu_kanan.php"; ?> 
+                 <?php include "view/menu_nav.php"; ?> 
             <!-- /.control-sidebar -->
 			
 			<footer class="main-footer">
@@ -137,7 +86,6 @@ else{
 		</div>
 		<!-- ./wrapper -->
 		
-            
 			<!-- jQuery -->
 			<script src="../template/adminlte/plugins/jquery/jquery.min.js"></script>
 			<!-- jQuery UI 1.11.4 -->
