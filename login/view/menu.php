@@ -24,7 +24,7 @@
 	  <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 <?php
         echo "<li class=\"nav-item\"><a class=\"nav-link\" href=?module=home> <i class=\"nav-icon fas fa-tachometer-alt\"></i><p>Beranda</p></a></li>"; 
-    		echo "<li class=\"nav-item\"><a class=\"nav-link\" href=?module=data> <i class=\"nav-icon fas fa-user\"></i><p>Data</p></a></li>";
+    		echo "<li class=\"nav-item\"><a class=\"nav-link\" href=?module=mahasiswa> <i class=\"nav-icon fas fa-user\"></i><p>Mahasiswa</p></a></li>";
         echo "<li class=\"nav-item\"><a class=\"nav-link\" href=?module=user> <i class=\"nav-icon fas fa-users\"></i><p>Users</p></a></li>";
 	    	echo'<li class="nav-item"><a class="nav-link" href=logout.php><i class="nav-icon fas fa-sign-out-alt"></i><p>Logout</p></a></li>';
 ?>
