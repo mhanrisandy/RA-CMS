@@ -9,8 +9,8 @@ if (!empty($_GET['module'])){
 }
                             
 if (!empty($_GET['act'])){
-    $control_act = $_GET['act'];
+    $act = $_GET['act'];
 } else {
-    $control_act = '';
+    $act = '';
 }
 ?>

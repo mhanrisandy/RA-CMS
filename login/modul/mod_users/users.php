@@ -3,7 +3,7 @@ include "../config/fungsi_paging.php";
 include "../config/fungsi_notifbar.php";
 
 $aksi="modul/mod_users/aksi_users.php";
-switch($control_act){
+switch($act){
     default:
     echo "<section class=\"col-lg-12 connectedSortable\">";
     show_notif_swal();

@@ -25,10 +25,10 @@
         if($numrow==0){
             query("CREATE TABLE `$table` (
                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                `file_content` longblob NOT NULL,
-                `file_name` varchar(255) NOT NULL,
-                `file_type` varchar(255) NOT NULL,
-                `file_size` bigint(20) NOT NULL DEFAULT 0,
+                `file_content` longblob NULL,
+                `file_name` varchar(255) NULL,
+                `file_type` varchar(255) NULL,
+                `file_size` bigint(20) NULL DEFAULT 0,
                 PRIMARY KEY (id)
               ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
         }
@@ -41,6 +41,7 @@
         
         $ekstensi_file = explode('.', $file_name);
         $ekstensi_file =  strtolower(end($ekstensi_file));
+        //nama file
         $file_name = $str . uniqid() . '.'.$ekstensi_file;
         
         if ($file_size > 0 and ($file_type =='image/jpeg' or $file_type == 'image/png')){

@@ -6,9 +6,8 @@ include "../config/setting.php";
 
 if (empty($_SESSION['username'])){
 	include "login.php";
-}
-else{
-?>
+} else {
+	?>
 	<!doctype html>
 	<html lang="en">
 	  <head>
@@ -124,6 +123,6 @@ else{
 			<!-- <script src="dist/js/demo.js"></script> -->  
 	  </body>
 	</html>
-<?php
+	<?php
 	}
 ?>

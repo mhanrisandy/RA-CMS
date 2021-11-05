@@ -7,15 +7,9 @@ if (empty($_SESSION['username'])){
 }
 else{
 include "../../../config/koneksi.php";
+include "../../../config/setting.php";
 include "../../../config/fungsi_notifbar.php";
 include "../../../config/fungsi_file.php";
-
-if (!empty($_GET['act'])){
-  $act=$_GET['act'];
-}
-if (!empty($_GET['module'])){
-  $module=$_GET['module'];
-}
 
 //field
 if (isset($_POST['NAMA'])){
