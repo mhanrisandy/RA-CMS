@@ -10,7 +10,7 @@ include "../config/koneksi.php";
     $_SESSION['pesan'] = 'username anda tidak ditemukan!';
     include "login.php";
   } else{
-    $login = query("SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
+    $login = query("SELECT * FROM users WHERE username='$username' AND password='$pass'");
     $ketemu = mysqli_num_rows($login);
     $r = mysqli_fetch_array($login);
 
