@@ -1,5 +1,5 @@
 <?php
-	// validasi xss dan injection
+	// validasi xss dan injection x
 	require_once('fungsi_validasi.php');
 
 	// database
